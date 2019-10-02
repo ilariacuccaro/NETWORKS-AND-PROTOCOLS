@@ -1,0 +1,27 @@
+# Comandi per svuotare la cash 
+iptables -F FORWARD 
+iptables -F INPUT iptables -F OUTPUT 
+iptables -F PREROUTING
+# Regole predefinte per scartare i pacchetti 
+iptables -P FORWARD DROP 
+iptables -P INPUT DROP 
+iptables -P OUTPUT DROP 
+iptables -t nat -P PREROUTING DROP
+#NAT modificazione pacchetti in transito
+# Natta la porta 443 (HTTPS) 
+iptables -t nat -A PREROUTING -i eth1 -p tcp --dport 443 -j DNAT --to-destination 192.168.4.1 
+# Natta la porta 465 (SMTP SSL) iptables -t nat -A PREROUTING -i eth1 -p tcp --dport 465 -j DNAT --to-destination   192.168.17.7
+# Natta la porta 995 (POP3 SSL) iptables -t nat -A PREROUTING -i eth1 -p tcp --dport 995 -j DNAT --to-destination   192.168.17.7
+# Natta la porta 993 (IMAP SSL) iptables -t nat -A PREROUTING -i eth1 -p tcp --dport 993 -j DNAT --to-destination  1 192.168.17.7 
+# Natta la porta 53 (DNS) iptables -t nat -A PREROUTING -i eth1 -p tcp --dport 53 -j DNAT --to-destination 192.168.17.3
+#accetta tutti i pacchetti da inoltrare con stato stabilito o collegato a connessioni gia iniziate
+# Accetta i pacchetti con stato STABILITO che devono essere inviati iptables -A FORWARD -m state --state ESTABLISHED,RELATED -j ACCEPT 
+#FILTRAGGIO DEI PACCHETTI 
+#accetta connessioni che transitano nel mio firewall relative a protocolli conosciuti 
+# Accetta pacchetti destinati al server web (HTTPS) iptables -A FORWARD -i eth1 -m state –state NEW -p tcp -d 192.168.17.5 – dport 443 -j ACCEPT 
+# Accetta pacchetti destinati al server mail (SMTP SSL) iptables -A FORWARD -i eth1 -m state –state NEW -p tcp -d 192.168. 17.6 – dport 465 -j ACCEPT 
+# Accetta pacchetti destinati al server mail (POP3 SSL) iptables -A FORWARD -i eth1 -m state –state NEW -p tcp -d 192.168. 17.6 – dport 995 -j ACCEPT 
+# Accetta pacchetti destinati al server mail (IMAP SSL) iptables -A FORWARD -i eth1 -m state –state NEW -p tcp -d 192.168. 17.6 – dport 993 -j ACCEPT 
+# Accetta pacchetti destinati al server DNS iptables -A FORWARD -i eth1 -m state –state NEW -p tcp -d 192.168. 17.7 – dport 53 -j ACCEPT
+# Evita di rimanere bloccato su porte chiuse                                                                       
+iptables -A FORWARD -p tcp -j REJECT --reject-with tcp-reset
