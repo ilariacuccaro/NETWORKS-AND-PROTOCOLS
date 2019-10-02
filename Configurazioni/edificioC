@@ -1,0 +1,31 @@
+#edificio C 
+#configurazione C 
+interfaces {
+ interface 192.168.1.1 passive; 
+ interface 192.168.12.2 active;        (verso Edificio B)
+ interface 192.168.13.2 active;        (verso Edificio D)
+ interface 192.168.15.2 active;        (verso Edificio E)
+}
+rip yes {
+ broadcast;
+ interface 192.168.12.2 { 
+  version 2 
+  multicast 
+  authentication simple “RIPauth”; 
+ }
+ interface 192.168.13.1{ 
+  version 2 
+  multicast 
+  authentication simple “RIPauth”; 
+ }
+ interface 192.168.15.1{ 
+  version 2 
+  multicast 
+  authentication simple “RIPauth”; 
+ }
+};
+export proto rip metric 0 { 
+ proto direct interface 192.168.1.1 { 
+         network 192.168.1.0  
+ } 
+};
