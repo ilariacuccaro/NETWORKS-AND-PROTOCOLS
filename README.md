@@ -1,2 +1,2 @@
 # Progetto-Protocolli
-Pianificazione di una rete aziendale per l'esame Reti di Calcolatori: Protocolli
+Pianificazione di una rete aziendale tramite Cisco Packet Tracer
