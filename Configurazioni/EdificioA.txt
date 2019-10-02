@@ -1,0 +1,22 @@
+#edificio A 
+#configurazione A 
+interfaces { 
+interface 192.168.2.1 passive;                      
+interface 192.168.10.2 active;              (verso Edificio B)
+};
+                                                                                        
+#dalle interfacce ricevo le informazioni del router
+rip yes{ 
+ broadcast; 
+ interface 192.168.10.2{ 
+  version 2; 
+  multicast; 
+ authorization simple “RIPauth”
+ }
+}; 
+#esporto il tutto alle reti 
+export proto rip metric 0{ 
+ proto direct interface 192.168.2.1{ 
+  network  192.168.2.0  
+ } 
+};
