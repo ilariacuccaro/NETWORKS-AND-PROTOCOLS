@@ -1,0 +1,7 @@
+#edificio E
+#router E                                                                                                                                       
+ifconfig eth0 192.168.5.0 netmask 255.255.255.0 broadcast 192.168.5.255                                   
+ifconfig eth1 192.168.14.2 netmask 255.255.255.0 broadcast 192.168.14.255                          
+ifconfig eth2 192.168.15.1 netmask 255.255.255.0 broadcast 192.168.15.255         
+#server Web                                                                                                                                                          
+ifconfig eth0 192.168.5.2 netmask 255.255.255.0 broadcast 192.168.5.255
